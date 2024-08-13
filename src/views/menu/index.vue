@@ -31,6 +31,14 @@
               <span>操作日志</span>
             </el-menu-item>
             <el-menu-item index="5">
+              <el-icon><User /></el-icon>
+              <span>用户管理</span>
+            </el-menu-item>
+            <el-menu-item index="6">
+              <el-icon><Service /></el-icon>
+              <span>联系我们</span>
+            </el-menu-item>
+            <el-menu-item index="7">
               <el-icon><Setting /></el-icon>
               <span>系统设置</span>
             </el-menu-item>
@@ -38,13 +46,12 @@
         >
         <el-main> <RouterView></RouterView> </el-main>
       </el-container>
-      <el-footer><Footer /></el-footer>
+      <el-footer><a>Copyright © 2022-2024 永远的神 版权所有</a></el-footer>
     </el-container>
   </div>
 </template>
 <script setup>
 import Header from "../home/Header.vue";
-import Footer from "../home/Footer.vue";
 </script>
 
 <style scoped>
