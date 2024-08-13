@@ -4,31 +4,36 @@
       <el-header><Header /></el-header>
       <el-container>
         <el-aside width="200px">
-          <el-menu
-            background-color="#545c64"
-            text-color="#ffffff"
-            active-text-color="#ffd04b"
-            default-active="1"
-          >
-            <el-sub-menu index="1">
+          <el-menu default-active="1" class="el-menu-vertical-demo" router>
+            <el-menu-item index="/home">
+              <el-icon><House /></el-icon>
+              <span>首页</span>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <el-icon><Document /></el-icon>
+              <span>系统概览</span>
+            </el-menu-item>
+            <el-sub-menu index="3">
               <template #title>
-                <span
-                  ><el-icon><House /></el-icon>Home</span
-                >
+                <el-icon><Odometer /></el-icon>
+                <span>系统管理</span>
               </template>
-              <el-menu-item index="1-1">设备1</el-menu-item>
-              <el-menu-item index="1-2">设备2</el-menu-item>
-              <el-sub-menu index="1-3">
-                <template #title>设备3</template>
-                <el-menu-item index="1-3-1">运行情况</el-menu-item>
-              </el-sub-menu>
+              <el-menu-item-group title="设备状态">
+                <el-menu-item index="3-1">在线设备</el-menu-item>
+                <el-menu-item index="3-2">离线设备</el-menu-item>
+              </el-menu-item-group>
+              <el-menu-item-group title="可视化">
+                <el-menu-item index="3-3">位置地图</el-menu-item>
+              </el-menu-item-group>
             </el-sub-menu>
-            <el-menu-item index="2"
-              ><el-icon><document /></el-icon>地图</el-menu-item
-            >
-            <el-menu-item index="3"
-              ><el-icon><setting /></el-icon>设置</el-menu-item
-            >
+            <el-menu-item index="4">
+              <el-icon><Open /></el-icon>
+              <span>操作日志</span>
+            </el-menu-item>
+            <el-menu-item index="5">
+              <el-icon><Setting /></el-icon>
+              <span>系统设置</span>
+            </el-menu-item>
           </el-menu></el-aside
         >
         <el-main> <RouterView></RouterView> </el-main>
@@ -74,5 +79,15 @@ body > .el-container {
   left: 0;
   width: 100%;
   height: 100%;
+}
+.el-menu-item {
+  background: #d3dce6;
+}
+
+:deep(.el-sub-menu__title) {
+  background: #d3dce6;
+}
+:deep(.el-menu-item-group) {
+  background: #d3dce6;
 }
 </style>
