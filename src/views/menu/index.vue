@@ -11,7 +11,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>个人中心</el-dropdown-item>
-                <el-dropdown-item>退出登录</el-dropdown-item>
+                <el-dropdown-item
+                  ><router-link to="/login" class="custom-link"
+                    >退出登录</router-link
+                  ></el-dropdown-item
+                >
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -135,5 +139,9 @@ body > .el-container {
 }
 :deep(.el-menu-item-group) {
   background: #d3dce6;
+}
+.custom-link {
+  text-decoration: none;
+  color: #000;
 }
 </style>

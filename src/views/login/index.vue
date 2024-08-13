@@ -217,4 +217,8 @@ const openForget = () => {
   height: 45px;
   font-size: 16px;
 }
+.custom-link {
+  text-decoration: none;
+  color: #fff;
+}
 </style>
