@@ -1,7 +1,22 @@
 <template>
   <div class="container">
     <el-container style="height: 100%">
-      <el-header><Header /></el-header>
+      <el-header>
+        <span class="header-center">欢迎来到水界守护者</span>
+        <div class="header-right">
+          <el-icon><Message /></el-icon>
+          <el-avatar :size="24" :src="circleUrl" :class="block" />
+          <el-dropdown>
+            <span class="el-dropdown-link"> 更多 </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>个人中心</el-dropdown-item>
+                <el-dropdown-item>退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
+      </el-header>
       <el-container>
         <el-aside width="200px">
           <el-menu default-active="1" class="el-menu-vertical-demo" router>
@@ -51,11 +66,35 @@
   </div>
 </template>
 <script setup>
-import Header from "../home/Header.vue";
+import { reactive, toRefs } from "vue";
+
+const state = reactive({
+  circleUrl:
+    "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+});
+
+const { circleUrl } = toRefs(state);
 </script>
 
 <style scoped>
-.el-header,
+.el-header {
+  display: flex;
+  height: 55px;
+  background: #b3c0d1;
+  color: #333;
+  align-items: center;
+  justify-content: space-between;
+
+  .header-center {
+    font-size: 20px;
+  }
+  .header-right {
+    width: 160px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
 .el-footer {
   background-color: #b3c0d1;
   color: #333;
