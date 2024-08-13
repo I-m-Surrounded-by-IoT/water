@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-container style="height: 100%">
-      <el-header>Header</el-header>
+      <el-header><Header /></el-header>
       <el-container>
         <el-aside width="200px">
           <el-menu
@@ -33,11 +33,14 @@
         >
         <el-main> <RouterView></RouterView> </el-main>
       </el-container>
-      <el-footer>Footer</el-footer>
+      <el-footer><Footer /></el-footer>
     </el-container>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import Header from "../home/Header.vue";
+import Footer from "../home/Footer.vue";
+</script>
 
 <style scoped>
 .el-header,
