@@ -19,7 +19,10 @@
             个人中心
           </el-dropdown-item>
           <el-dropdown-item
-            ><el-icon><SwitchButton /></el-icon>退出登录</el-dropdown-item
+            ><el-icon><SwitchButton /></el-icon
+            ><router-link to="/login" class="custom-link"
+              >退出登录</router-link
+            ></el-dropdown-item
           >
         </el-dropdown-menu>
       </template>

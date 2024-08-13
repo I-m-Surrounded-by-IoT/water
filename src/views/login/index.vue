@@ -33,7 +33,11 @@
                       >
                     </div>
                     <div class="footer-button">
-                      <el-button type="primary">登录</el-button>
+                      <el-button type="primary"
+                        ><router-link to="/menu" class="custom-link"
+                          >登录</router-link
+                        ></el-button
+                      >
                     </div>
                     <div class="footer-go-register">
                       还没有账号？<span class="go-register">马上注册</span>
