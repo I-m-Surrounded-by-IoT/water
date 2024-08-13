@@ -1,6 +1,4 @@
-<template>
-  <router-view></router-view>
-</template>
+<template>001<router-view></router-view></template>
 
 <script></script>
 
