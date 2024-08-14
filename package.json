@@ -13,6 +13,7 @@
     "core-js": "^3.8.3",
     "element-plus": "^2.8.0",
     "vue": "^3.2.13",
+    "vue-baidu-map-3x": "^1.0.39",
     "vue-router": "^4.4.3"
   },
   "devDependencies": {
