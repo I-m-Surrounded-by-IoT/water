@@ -33,10 +33,8 @@
                       >
                     </div>
                     <div class="footer-button">
-                      <el-button type="primary"
-                        ><router-link to="/menu" class="custom-link"
-                          >登录</router-link
-                        ></el-button
+                      <el-button type="primary" @click="onLogin"
+                        >登录</el-button
                       >
                     </div>
                     <div class="footer-go-register">
@@ -87,6 +85,10 @@
 <script setup>
 import { ref, reactive } from "vue";
 import forget from "@/views/login/components/forge_password.vue";
+import { useRouter } from "vue-router";
+import { login } from "@/api/user";
+
+const route = useRouter();
 
 const activeName = ref("first");
 
@@ -99,6 +101,14 @@ const registerData = reactive({
   password: "",
   rePassword: "",
 });
+
+const onLogin = () => {
+  login(loginData.account, loginData.password).then(({ data }) => {
+    console.log(data);
+    localStorage.setItem("token", data.data.token);
+    route.push("/menu");
+  });
+};
 
 const forgets = ref();
 

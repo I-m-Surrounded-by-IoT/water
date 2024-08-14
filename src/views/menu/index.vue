@@ -11,11 +11,7 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>个人中心</el-dropdown-item>
-                <el-dropdown-item
-                  ><router-link to="/login" class="custom-link"
-                    >退出登录</router-link
-                  ></el-dropdown-item
-                >
+                <el-dropdown-item @click="onLogout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -71,6 +67,14 @@
 </template>
 <script setup>
 import { reactive, toRefs } from "vue";
+import { useRouter } from "vue-router";
+
+const route = useRouter();
+
+const onLogout = () => {
+  localStorage.removeItem("token");
+  route.replace("/login");
+};
 
 const state = reactive({
   circleUrl:
