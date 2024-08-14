@@ -112,6 +112,7 @@ const { circleUrl } = toRefs(state);
   background-color: #e9eef3;
   color: #333;
   text-align: center;
+  --el-main-padding: 0;
 }
 
 body > .el-container {
