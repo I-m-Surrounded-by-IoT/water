@@ -24,7 +24,7 @@
               <el-icon><House /></el-icon>
               <span>首页</span>
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="/overview">
               <el-icon><Document /></el-icon>
               <span>系统概览</span>
             </el-menu-item>
@@ -32,19 +32,19 @@
               <el-icon><Open /></el-icon>
               <span>设备管理</span>
             </el-menu-item>
-            <el-menu-item index="4">
+            <el-menu-item index="/Systemlogs">
               <el-icon><Open /></el-icon>
               <span>操作日志</span>
             </el-menu-item>
-            <el-menu-item index="5">
+            <el-menu-item index="/user">
               <el-icon><User /></el-icon>
               <span>用户管理</span>
             </el-menu-item>
-            <el-menu-item index="6">
+            <el-menu-item index="/aftersales">
               <el-icon><Service /></el-icon>
               <span>联系我们</span>
             </el-menu-item>
-            <el-menu-item index="7">
+            <el-menu-item index="/set">
               <el-icon><Setting /></el-icon>
               <span>系统设置</span>
             </el-menu-item>
