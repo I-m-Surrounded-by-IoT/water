@@ -34,7 +34,7 @@
             </el-menu-item>
             <el-menu-item index="/Systemlogs">
               <el-icon><Collection /></el-icon>
-              <span>操作日志</span>
+              <span>设备日志</span>
             </el-menu-item>
             <el-menu-item index="/user">
               <el-icon><User /></el-icon>
