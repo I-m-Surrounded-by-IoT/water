@@ -16,9 +16,13 @@ const routes = [
             {
                 path :'/home',
                 component :()=>import("../views/home/index.vue"),
+            },
+            {
+                path: '/device',
+                component: ()=>import("../views/device/index.vue")
             }
         ]
-    },
+    }
 ]
 const router = createRouter({
     history:createWebHistory(),

@@ -28,19 +28,10 @@
               <el-icon><Document /></el-icon>
               <span>系统概览</span>
             </el-menu-item>
-            <el-sub-menu index="3">
-              <template #title>
-                <el-icon><Odometer /></el-icon>
-                <span>系统管理</span>
-              </template>
-              <el-menu-item-group title="设备状态">
-                <el-menu-item index="3-1">在线设备</el-menu-item>
-                <el-menu-item index="3-2">离线设备</el-menu-item>
-              </el-menu-item-group>
-              <el-menu-item-group title="可视化">
-                <el-menu-item index="3-3">位置地图</el-menu-item>
-              </el-menu-item-group>
-            </el-sub-menu>
+            <el-menu-item index="/device">
+              <el-icon><Open /></el-icon>
+              <span>设备管理</span>
+            </el-menu-item>
             <el-menu-item index="4">
               <el-icon><Open /></el-icon>
               <span>操作日志</span>
