@@ -51,18 +51,19 @@ function newMapUrl(deviceId, geo, timestamp, more) {
 
   params.set("content", content);
   params.set("autoOpen", "true");
-  params.set("latlng", `${geo.Lat},${geo.Lon}`);
-  params.set("l", "");
 
-  return url.toString();
+  return `${url.toString()}&latlng=${geo.Lon},${geo.Lat}&l`;
 }
-
+// http://localhost:8080/Systemlogs?deviceId=2&lat=114.400647&lon=30.524631&time=1719048186584&more={%22timestamp%22:1719048247509,%22temperature%22:0.55218863,%22ph%22:9.138566,%22tsw%22:0,%22tds%22:0,%22oxygen%22:0}
 onMounted(() => {
   mapUrl.value = newMapUrl(
     route.query.deviceId,
-    { Lat: route.query.lat, Lon: route.query.lon },
+    {
+      Lat: Number(route.query.lat).toFixed(5),
+      Lon: Number(route.query.lon).toFixed(5),
+    },
     Number(route.query.time),
-    route.query.more ? JSON.parse(route.query.more) : {}
+    route.query.more ? JSON.parse(decodeURIComponent(route.query.more)) : {}
   );
   console.log(mapUrl.value);
 });

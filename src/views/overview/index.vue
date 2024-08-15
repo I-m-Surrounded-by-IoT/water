@@ -47,16 +47,21 @@
               <button
                 @click="
                   () => {
-                    router.push(
-                      `/Systemlogs?deviceId=${row.deviceId}&lat=${
-                        row.data.geoPoint.lat
-                      }&lon=${row.data.geoPoint.lon}&time=${
-                        row.createdAt
-                      }&more=${JSON.stringify({
-                        ...row.data,
-                        geoPoint: undefined,
-                      })}`
-                    );
+                    router.push({
+                      path: '/Systemlogs',
+                      query: {
+                        deviceId: row.deviceId,
+                        lat: row.data.geoPoint.lat,
+                        lon: row.data.geoPoint.lon,
+                        time: row.createdAt,
+                        more: encodeURIComponent(
+                          JSON.stringify({
+                            ...row.data,
+                            geoPoint: undefined,
+                          })
+                        ),
+                      },
+                    });
                   }
                 "
               >
