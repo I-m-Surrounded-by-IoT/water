@@ -26,7 +26,7 @@
           <el-table-column label="序号" type="index" />
           <el-table-column prop="username" label="账号" />
           <el-table-column prop="id" label="编号" />
-          <el-table-column prop="createdAt" label="createdAt" />
+          <el-table-column prop="createdAt" label="时间戳" />
           <el-table-column prop="role" label="管理员" />
           <el-table-column prop="phone" label="手机号" />
           <el-table-column prop="email" label="邮箱" />

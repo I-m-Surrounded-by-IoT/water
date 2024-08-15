@@ -56,7 +56,7 @@ import { Search } from "@element-plus/icons-vue";
 import breadcrumb from "@/components/breadcrumb.vue";
 
 const item = ref({
-  first: "系统概览",
+  first: "工作日志",
 });
 const adminAccount = ref("");
 const tableData = ref([

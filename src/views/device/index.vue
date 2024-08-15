@@ -1,4 +1,5 @@
 <template>
+  <breadcrumb ref="breadcrumb" :item="item"></breadcrumb>
   <div>total: {{ deviceList?.total || 0 }}</div>
   <div v-if="deviceList" v-for="device in deviceList?.devices">
     {{ device }}
@@ -18,6 +19,9 @@ import { getDeviceList } from "@/api/device";
 import { reportNow } from "@/api/dete";
 import { onMounted, ref } from "vue";
 import { ElNotification } from "element-plus";
+
+import breadcrumb from "@/components/breadcrumb.vue";
+
 const deviceList = ref({});
 onMounted(() => {
   getDeviceList().then(({ data }) => {
@@ -44,6 +48,10 @@ const onReportNow = (id) => {
       });
     });
 };
+
+const item = ref({
+  first: "设备管理",
+});
 </script>
 
 <style scoped></style>

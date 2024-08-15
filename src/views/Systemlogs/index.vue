@@ -52,7 +52,7 @@ import { ref } from "vue";
 import breadcrumb from "@/components/breadcrumb.vue";
 
 const item = ref({
-  first: "设备日志",
+  first: "设备状态",
 });
 
 const show = ref(false);
