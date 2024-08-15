@@ -42,7 +42,7 @@
             </el-menu-item>
             <el-menu-item index="/aftersales">
               <el-icon><Service /></el-icon>
-              <span>测试页面</span>
+              <span>控制小船</span>
             </el-menu-item>
             <el-menu-item index="/set">
               <el-icon><Setting /></el-icon>

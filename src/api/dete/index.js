@@ -44,3 +44,13 @@ export function takeBoat(deviceId, command) {
     },
   });
 }
+//控制小船
+export function takeBoatForword(deviceId) {
+  return takeBoat(deviceId, 0);
+}
+export function takeBoatLeft(deviceId) {
+  return takeBoat(deviceId, 1);
+}
+export function takeBoatRight(deviceId) {
+  return takeBoat(deviceId, 2);
+}

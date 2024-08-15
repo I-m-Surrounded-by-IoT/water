@@ -42,6 +42,28 @@
           <el-table-column prop="data.oxygen" label="含氧量" />
           <el-table-column prop="data.tds" label="tds" />
           <el-table-column prop="data.tsw" label="tsw" />
+          <el-table-column label="操作">
+            <template #default="{ row }">
+              <button
+                @click="
+                  () => {
+                    router.push(
+                      `/Systemlogs?deviceId=${row.deviceId}&lat=${
+                        row.data.geoPoint.lat
+                      }&lon=${row.data.geoPoint.lon}&time=${
+                        row.createdAt
+                      }&more=${JSON.stringify({
+                        ...row.data,
+                        geoPoint: undefined,
+                      })}`
+                    );
+                  }
+                "
+              >
+                查看详情
+              </button>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
     </div>
@@ -64,6 +86,7 @@ import { deteList, reportNow } from "@/api/dete";
 import { useRoute } from "vue-router";
 import { useDebounceFn } from "@vueuse/core";
 import { ElMessage } from "element-plus";
+import router from "@/router";
 const route = useRoute();
 const item = ref({
   first: "测试",

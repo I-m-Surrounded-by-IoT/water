@@ -3,42 +3,12 @@
   <div class="common-layout">
     <el-container>
       <el-main>
-        <baidu-map
-          class="map"
-          :zoom="16"
-          :center="{ lng: 114.399724, lat: 30.525502 }"
-          :scroll-wheel-zoom="true"
-          ><bm-geolocation
-            anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
-            :showAddressBar="true"
-            :autoLocation="true"
-          ></bm-geolocation>
-          <bm-scale anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-scale>
-          <bm-copyright
-            anchor="BMAP_ANCHOR_TOP_RIGHT"
-            :copyright="[
-              {
-                id: 1,
-                content: 'Copyright Message',
-                bounds: { ne: { lng: 110, lat: 40 }, sw: { lng: 0, lat: 0 } },
-              },
-              { id: 2, content: '<a>永远的神 版权所有</a>' },
-            ]"
-          >
-          </bm-copyright>
-          <!-- 点击一个点就有一个弹框 -->
-          <bm-marker
-            :position="{ lng: 114.400746, lat: 30.527161 }"
-            @click="infoWindowOpen"
-          >
-            <bm-info-window
-              :show="show"
-              @close="infoWindowClose"
-              @open="infoWindowOpen"
-              >我爱武汉</bm-info-window
-            >
-          </bm-marker>
-        </baidu-map>
+        <iframe
+          v-if="mapUrl.value !== ''"
+          :src="mapUrl"
+          width="100%"
+          height="100%"
+        ></iframe>
       </el-main>
       <el-aside width="300px"
         ><el-button type="success">更新</el-button></el-aside
@@ -47,9 +17,55 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 import breadcrumb from "@/components/breadcrumb.vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
+
+const mapUrl = ref("");
+
+function newMapUrl(deviceId, geo, timestamp, more) {
+  let date = new Date(timestamp);
+  let url = new URL("https://map.baidu.com/");
+  let params = url.searchParams;
+  params.set("title", `设备ID:${deviceId}`);
+
+  let content = `坐标:${geo.Lat},${geo.Lon}\n时间:${date.toLocaleString(
+    "zh-CN",
+    {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }
+  )}\n`;
+
+  for (const key in more) {
+    if (more.hasOwnProperty(key)) {
+      content += `${key}:${more[key]}\n`;
+    }
+  }
+
+  params.set("content", content);
+  params.set("autoOpen", "true");
+  params.set("latlng", `${geo.Lat},${geo.Lon}`);
+  params.set("l", "");
+
+  return url.toString();
+}
+
+onMounted(() => {
+  mapUrl.value = newMapUrl(
+    route.query.deviceId,
+    { Lat: route.query.lat, Lon: route.query.lon },
+    Number(route.query.time),
+    route.query.more ? JSON.parse(route.query.more) : {}
+  );
+  console.log(mapUrl.value);
+});
 
 const item = ref({
   first: "设备状态",
