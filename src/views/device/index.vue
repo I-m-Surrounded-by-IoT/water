@@ -12,6 +12,24 @@
     >
       立即上报
     </button>
+    <button
+      @click="
+        () => {
+          router.push(`/overview?deviceId=${device.id}`);
+        }
+      "
+    >
+      查看数据
+    </button>
+    <button
+      @click="
+        () => {
+          router.push(`/boatControl?deviceId=${device.id}`);
+        }
+      "
+    >
+      控制小船
+    </button>
   </div>
 </template>
 <script setup>
@@ -19,6 +37,8 @@ import { getDeviceList } from "@/api/device";
 import { reportNow } from "@/api/dete";
 import { onMounted, ref } from "vue";
 import { ElNotification } from "element-plus";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 import breadcrumb from "@/components/breadcrumb.vue";
 

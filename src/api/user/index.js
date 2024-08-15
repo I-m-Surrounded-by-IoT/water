@@ -43,13 +43,15 @@ export function createUser(username, password, isAdmin = true) {
   });
 }
 //用户列表
-export function userList() {
+export function userList(username) {
   return request({
     method: "get",
     url: "/api/admin/user/list",
     headers: {
       Authorization: localStorage.getItem("token"),
     },
-    params: {},
+    params: {
+      username,
+    },
   });
 }

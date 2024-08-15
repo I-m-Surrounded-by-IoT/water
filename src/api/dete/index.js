@@ -3,10 +3,15 @@ import request from "@/utils/request";
 /* 数据收集 */
 
 //数据列表
-export function deteList() {
+export function deteList(deviceId, page = 1, size = 20) {
   return request({
     method: "get",
     url: "/api/collection/records/device",
+    params: {
+      deviceId,
+      page,
+      size,
+    },
     headers: {
       Authorization: localStorage.getItem("token"),
     },

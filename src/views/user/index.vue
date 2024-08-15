@@ -8,7 +8,7 @@
         <!-- 搜索框 -->
         <div class="serch-wrapped">
           <el-input
-            v-model="adminAccount"
+            v-model="username"
             size="large"
             placeholder="输入账号进行搜索"
             :prefix-icon="Search"
@@ -23,7 +23,6 @@
       <!-- 表格内容 -->
       <div class="table-content">
         <el-table :data="tableData" border style="width: 100%">
-          <el-table-column label="序号" type="index" />
           <el-table-column prop="username" label="账号" />
           <el-table-column prop="id" label="编号" />
           <el-table-column prop="createdAt" label="时间戳" />
@@ -34,6 +33,8 @@
           <el-table-column label="操作">
             <template #default="{ row }">
               <el-button type="danger">删除</el-button>
+              <el-button>绑定邮箱</el-button>
+              <el-button>绑定手机</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -51,19 +52,29 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
-
 import breadcrumb from "@/components/breadcrumb.vue";
 import { userList } from "@/api/user";
+import { useDebounceFn } from "@vueuse/core";
 
 const item = ref({
   first: "用户管理",
 });
-const adminAccount = ref("");
+const username = ref("");
 const tableData = ref([]);
+const getValue = useDebounceFn(() => {
+  userList(username.value).then(({ data }) => {
+    tableData.value = data.data.users;
+    // console.log(data);
+  });
+}, 1000);
+const stop = watch(username, getValue);
+onUnmounted(() => {
+  stop();
+});
 onMounted(() => {
-  userList().then(({ data }) => {
+  userList(username.value).then(({ data }) => {
     tableData.value = data.data.users;
     // console.log(data);
   });

@@ -8,7 +8,7 @@
         <!-- 搜索框 -->
         <div class="serch-wrapped">
           <el-input
-            v-model="adminAccount"
+            v-model="deviceId"
             size="large"
             placeholder="输入账号进行搜索"
             :prefix-icon="Search"
@@ -17,24 +17,31 @@
         </div>
         <!-- 按钮 -->
         <div class="botton-wrapped">
-          <el-button type="primary">添加设备</el-button>
+          <el-button
+            @click="
+              () => {
+                onReportNow(deviceId);
+              }
+            "
+            type="primary"
+            >立即上报</el-button
+          >
         </div>
       </div>
       <!-- 表格内容 -->
       <div class="table-content">
         <el-table :data="tableData" border style="width: 100%">
-          <el-table-column type="index" />
-          <el-table-column prop="account" label="账号" />
-          <el-table-column prop="deviceId" label="编号" />
-          <el-table-column prop="mac" label="设备mac" />
-          <el-table-column prop="acreatedAt" label="createdAt" />
-          <!-- 插槽 -->
-          <el-table-column label="操作">
+          <el-table-column prop="deviceId" label="设备id" />
+          <el-table-column prop="createdAt" label="时间戳" />
+          <el-table-column label="坐标">
             <template #default="{ row }">
-              <el-button type="success">立即上报</el-button>
-              <el-button type="danger">删除设备</el-button>
+              {{ row.data.geoPoint.lat }},{{ row.data.geoPoint.lon }}
             </template>
           </el-table-column>
+          <el-table-column prop="data.ph" label="PH" />
+          <el-table-column prop="data.oxygen" label="含氧量" />
+          <el-table-column prop="data.tds" label="tds" />
+          <el-table-column prop="data.tsw" label="tsw" />
         </el-table>
       </div>
     </div>
@@ -42,28 +49,57 @@
     <div class="table-footer">
       <el-pagination
         :page-size="20"
-        :pager-count="9"
         layout="prev, pager, next"
-        :total="1000"
+        :total="total"
+        v-model:current-page="currentPage"
       />
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
 import { Search } from "@element-plus/icons-vue";
-
 import breadcrumb from "@/components/breadcrumb.vue";
-
+import { deteList, reportNow } from "@/api/dete";
+import { useRoute } from "vue-router";
+import { useDebounceFn } from "@vueuse/core";
+import { ElMessage } from "element-plus";
+const route = useRoute();
 const item = ref({
-  first: "工作日志",
+  first: "测试",
 });
-const adminAccount = ref("");
-const tableData = ref([
-  {
-    id: 1,
-  },
-]);
+const deviceId = ref(route.query.deviceId || "2");
+const tableData = ref([]);
+const currentPage = ref(1);
+const total = ref(0);
+const getValue = useDebounceFn(() => {
+  deteList(deviceId.value, currentPage.value).then(({ data }) => {
+    tableData.value = data.data.records;
+    total.value = data.data.total;
+    console.log(tableData.value);
+  });
+}, 1000);
+const stop = watch(deviceId, getValue);
+const stop2 = watch(currentPage, getValue);
+const stop3 = setInterval(() => {
+  getValue();
+}, 3000);
+onUnmounted(() => {
+  stop();
+  stop2();
+  clearInterval(stop3);
+});
+onMounted(getValue);
+
+const onReportNow = (id) => {
+  reportNow(id).then((data) => {
+    ElMessage({
+      message: "上报成功",
+      type: "success",
+    });
+    setTimeout(getValue, 3000);
+  });
+};
 </script>
 
 <style scoped>
