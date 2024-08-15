@@ -54,7 +54,7 @@ function newMapUrl(deviceId, geo, timestamp, more) {
 
   return `${url.toString()}&latlng=${geo.Lon},${geo.Lat}&l`;
 }
-// http://localhost:8080/Systemlogs?deviceId=2&lat=114.400647&lon=30.524631&time=1719048186584&more={%22timestamp%22:1719048247509,%22temperature%22:0.55218863,%22ph%22:9.138566,%22tsw%22:0,%22tds%22:0,%22oxygen%22:0}
+// http://localhost:8080/map?deviceId=2&lat=114.400647&lon=30.524631&time=1719048186584&more={%22timestamp%22:1719048247509,%22temperature%22:0.55218863,%22ph%22:9.138566,%22tsw%22:0,%22tds%22:0,%22oxygen%22:0}
 onMounted(() => {
   mapUrl.value = newMapUrl(
     route.query.deviceId,
@@ -85,6 +85,8 @@ const infoWindowOpen = () => {
 .el-main {
   height: 694.333px;
   padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 .map {
   width: 100%;
