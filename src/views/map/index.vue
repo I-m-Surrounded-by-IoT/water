@@ -1,8 +1,20 @@
 <template>
   <breadcrumb ref="breadcrumb" :item="item"></breadcrumb>
   <div class="common-layout">
+    <div style="width: 600px; height: auto; max-height: 350px">
+      <canvas id="temperature"></canvas>
+    </div>
+    <div style="width: 600px; height: auto; max-height: 350px">
+      <canvas id="pH"></canvas>
+    </div>
+    <div style="width: 600px; height: auto; max-height: 350px">
+      <canvas id="Oxygen"></canvas>
+    </div>
+    <div style="width: 600px; height: auto; max-height: 350px">
+      <canvas id="Tsw"></canvas>
+    </div>
     <el-container>
-      <el-main>
+      <el-main style="display: auto">
         <iframe
           v-if="mapUrl.value !== ''"
           :src="mapUrl"
@@ -10,9 +22,6 @@
           height="100%"
         ></iframe>
       </el-main>
-      <el-aside width="300px"
-        ><el-button type="success">更新</el-button></el-aside
-      >
     </el-container>
   </div>
 </template>
@@ -21,11 +30,12 @@ import { onMounted, ref } from "vue";
 
 import breadcrumb from "@/components/breadcrumb.vue";
 import { useRoute } from "vue-router";
+import Chart from "chart.js/auto";
 const route = useRoute();
 
 const mapUrl = ref("");
 
-function newMapUrl(deviceId, geo, timestamp, more) {
+function newMapUrl(deviceId, geo, timestamp, level) {
   let date = new Date(timestamp);
   let url = new URL("https://map.baidu.com/");
   let params = url.searchParams;
@@ -41,20 +51,48 @@ function newMapUrl(deviceId, geo, timestamp, more) {
       minute: "2-digit",
       second: "2-digit",
     }
-  )}\n`;
-
-  for (const key in more) {
-    if (more.hasOwnProperty(key)) {
-      content += `${key}:${more[key]}\n`;
-    }
-  }
-
+  )}\n污染等级:${level}`;
   params.set("content", content);
   params.set("autoOpen", "true");
 
   return `${url.toString()}&latlng=${geo.Lon},${geo.Lat}&l`;
 }
-// http://localhost:8080/map?deviceId=2&lat=114.400647&lon=30.524631&time=1719048186584&more={%22timestamp%22:1719048247509,%22temperature%22:0.55218863,%22ph%22:9.138566,%22tsw%22:0,%22tds%22:0,%22oxygen%22:0}
+
+const newChart = (html, title = "Chart", labels, datasets) => {
+  return new Chart(html, {
+    type: "line",
+    data: {
+      labels,
+      datasets,
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: title,
+        },
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: "Time",
+          },
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: "Value",
+          },
+        },
+      },
+    },
+  });
+};
+
 onMounted(() => {
   mapUrl.value = newMapUrl(
     route.query.deviceId,
@@ -63,9 +101,125 @@ onMounted(() => {
       Lon: Number(route.query.lon).toFixed(5),
     },
     Number(route.query.time),
-    route.query.more ? JSON.parse(decodeURIComponent(route.query.more)) : {}
+    route.query.level || 0
   );
-  console.log(mapUrl.value);
+  const record = route.query.record
+    ? JSON.parse(decodeURIComponent(route.query.record))
+    : {};
+  const guess = route.query.guess
+    ? JSON.parse(decodeURIComponent(route.query.guess))
+    : {};
+  console.log(record);
+  console.log(guess);
+
+  // ----------
+  if (!guess.qualities) return;
+  const labels = guess.qualities.map((q) =>
+    new Date(q.timestamp).toLocaleString()
+  );
+  newChart(document.getElementById("temperature"), "Temperature", labels, [
+    {
+      label: "Temperature",
+      data: guess.qualities.map((q) => q.temperature) /* 火红色 */,
+      borderColor: "rgb(178, 34, 34)",
+      backgroundColor: "rgba(178, 34, 34, 0.2)",
+    },
+  ]);
+  newChart(document.getElementById("pH"), "pH", labels, [
+    {
+      label: "pH",
+      data: guess.qualities.map((q) => q.ph) /* 火红色 */,
+      borderColor: "rgb(178, 34, 34)",
+      backgroundColor: "rgba(178, 34, 34, 0.2)",
+    },
+  ]);
+  newChart(document.getElementById("Oxygen"), "Oxygen", labels, [
+    {
+      label: "Oxygen",
+      data: guess.qualities.map((q) => q.oxygen) /* 火红色 */,
+      borderColor: "rgb(178, 34, 34)",
+      backgroundColor: "rgba(178, 34, 34, 0.2)",
+    },
+  ]);
+  newChart(document.getElementById("Tsw"), "Tsw", labels, [
+    {
+      label: "Tsw",
+      data: guess.qualities.map((q) => q.tsw) /* 火红色 */,
+      borderColor: "rgb(178, 34, 34)",
+      backgroundColor: "rgba(178, 34, 34, 0.2)",
+    },
+  ]);
+  // new Chart(chart, {
+  //   type: "line",
+  //   data: {
+  //     labels: guess.qualities.map((q) =>
+  //       new Date(q.timestamp).toLocaleString()
+  //     ),
+  //     datasets: [
+  //       {
+  //         label: "Temperature",
+  //         data: guess.qualities.map((q) => q.temperature) /* 火红色 */,
+  //         borderColor: "rgb(178, 34, 34)",
+  //         backgroundColor: "rgba(178, 34, 34, 0.2)",
+  //       },
+  //       {
+  //         label: "pH",
+  //         data: guess.qualities.map((q) => q.ph) /* 粉色 */,
+  //         borderColor: "rgb(255, 192, 203)",
+  //         backgroundColor: "rgba(255, 192, 203, 0.2)",
+  //       },
+  //       {
+  //         label: "Oxygen",
+  //         data: guess.qualities.map((q) => q.oxygen) /* 蓝色 */,
+  //         borderColor: "rgb(135, 206, 250)",
+  //         backgroundColor: "rgba(135, 206, 250, 0.2)",
+  //       },
+  //       {
+  //         label: "污染等级",
+  //         data: guess.levels /* 紫色 */,
+  //         borderColor: "rgb(230, 230, 250)",
+  //         backgroundColor: "rgba(230, 230, 250, 0.2)",
+  //       },
+  //       {
+  //         label: "Tds",
+  //         data: guess.qualities.map((q) => q.tds) /* 橙色 */,
+  //         borderColor: "rgb(255, 165, 0)",
+  //         backgroundColor: "rgba(255, 165, 0, 0.2)",
+  //       },
+  //       {
+  //         label: "Tsw",
+  //         data: guess.qualities.map((q) => q.tsw) /* 黄色 */,
+  //         borderColor: "rgb(204, 255, 0)",
+  //         backgroundColor: "rgba(204, 255, 0, 0.2)",
+  //       },
+  //     ],
+  //   },
+  //   options: {
+  //     responsive: true,
+  //     plugins: {
+  //       title: {
+  //         display: true,
+  //         text: "Water Quality Over Time",
+  //       },
+  //     },
+  //     scales: {
+  //       x: {
+  //         display: true,
+  //         title: {
+  //           display: true,
+  //           text: "Time",
+  //         },
+  //       },
+  //       y: {
+  //         display: true,
+  //         title: {
+  //           display: true,
+  //           text: "Value",
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
 });
 
 const item = ref({
