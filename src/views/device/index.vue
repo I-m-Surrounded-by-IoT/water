@@ -14,7 +14,8 @@
   </div>
 </template>
 <script setup>
-import { getDeviceList, reportNow } from "@/api/device";
+import { getDeviceList } from "@/api/device";
+import { reportNow } from "@/api/dete";
 import { onMounted, ref } from "vue";
 import { ElNotification } from "element-plus";
 const deviceList = ref({});
