@@ -18,8 +18,8 @@ const routes = [
         component: () => import("../views/home/index.vue"),
       },
       {
-        path: "/overview",
-        component: () => import("../views/overview/index.vue"),
+        path: "/information",
+        component: () => import("../views/information/index.vue"),
       },
       {
         path: "/device",
