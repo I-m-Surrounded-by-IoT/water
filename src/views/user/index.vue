@@ -24,10 +24,12 @@
       <div class="table-content">
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column label="序号" type="index" />
-          <el-table-column prop="account" label="账号" />
-          <el-table-column prop="deviceId" label="编号" />
-          <el-table-column prop="mac" label="设备mac" />
-          <el-table-column prop="acreatedAt" label="createdAt" />
+          <el-table-column prop="username" label="账号" />
+          <el-table-column prop="id" label="编号" />
+          <el-table-column prop="createdAt" label="createdAt" />
+          <el-table-column prop="role" label="管理员" />
+          <el-table-column prop="phone" label="手机号" />
+          <el-table-column prop="email" label="邮箱" />
           <!-- 插槽 -->
           <el-table-column label="操作">
             <template #default="{ row }">
@@ -38,31 +40,34 @@
       </div>
     </div>
     <!-- 底部 -->
-    <div class="table-footer">
+    <!-- <div class="table-footer">
       <el-pagination
         :page-size="20"
         :pager-count="9"
         layout="prev, pager, next"
         :total="1000"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { Search } from "@element-plus/icons-vue";
 
 import breadcrumb from "@/components/breadcrumb.vue";
+import { userList } from "@/api/user";
 
 const item = ref({
   first: "用户管理",
 });
 const adminAccount = ref("");
-const tableData = ref([
-  {
-    id: 1,
-  },
-]);
+const tableData = ref([]);
+onMounted(() => {
+  userList().then(({ data }) => {
+    tableData.value = data.data.users;
+    // console.log(data);
+  });
+});
 </script>
 
 <style scoped>

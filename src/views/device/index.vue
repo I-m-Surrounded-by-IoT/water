@@ -27,7 +27,6 @@ onMounted(() => {
 const onReportNow = (id) => {
   reportNow(id)
     .then((data) => {
-      //   throw new Error("我草泥马");
       console.log("立即上报成功");
       ElNotification({
         title: "成功",

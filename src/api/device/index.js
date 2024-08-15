@@ -36,3 +36,26 @@ export function registDeviceList(mac, password) {
         }
     })
 }
+//我的信息
+export function meDeviceList() {
+    return request({
+        method: 'get',
+        url: '/api/user/me',
+        headers: {
+            Authorization: localStorage.getItem("token")
+        }
+    })
+}
+
+export function recordsDeviceList(device_id) {
+    return request({
+        method: 'get',
+        url: '/api/collection/records/device',
+        params: {
+            device_id
+        },
+        headers: {
+            Authorization: localStorage.getItem("token")
+        }
+    })
+}
