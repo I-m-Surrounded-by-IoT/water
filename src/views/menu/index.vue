@@ -36,7 +36,7 @@
               <el-icon><Collection /></el-icon>
               <span>工作日志</span>
             </el-menu-item>
-            <el-menu-item index="/Systemlogs">
+            <el-menu-item index="/map">
               <el-icon><MostlyCloudy /></el-icon>
               <span>设备状态</span>
             </el-menu-item>

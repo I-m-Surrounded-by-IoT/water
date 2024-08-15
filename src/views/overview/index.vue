@@ -48,7 +48,7 @@
                 @click="
                   () => {
                     router.push({
-                      path: '/Systemlogs',
+                      path: '/map',
                       query: {
                         deviceId: row.deviceId,
                         lat: row.data.geoPoint.lat,
