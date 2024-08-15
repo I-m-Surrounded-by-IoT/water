@@ -24,25 +24,25 @@
               <el-icon><House /></el-icon>
               <span>首页</span>
             </el-menu-item>
-            <el-menu-item index="/overview">
-              <el-icon><Document /></el-icon>
-              <span>系统概览</span>
-            </el-menu-item>
             <el-menu-item index="/device">
               <el-icon><Open /></el-icon>
               <span>设备管理</span>
-            </el-menu-item>
-            <el-menu-item index="/Systemlogs">
-              <el-icon><Collection /></el-icon>
-              <span>设备日志</span>
             </el-menu-item>
             <el-menu-item index="/user">
               <el-icon><User /></el-icon>
               <span>用户管理</span>
             </el-menu-item>
+            <el-menu-item index="/overview">
+              <el-icon><Collection /></el-icon>
+              <span>工作日志</span>
+            </el-menu-item>
+            <el-menu-item index="/Systemlogs">
+              <el-icon><MostlyCloudy /></el-icon>
+              <span>设备状态</span>
+            </el-menu-item>
             <el-menu-item index="/aftersales">
               <el-icon><Service /></el-icon>
-              <span>联系我们</span>
+              <span>测试页面</span>
             </el-menu-item>
             <el-menu-item index="/set">
               <el-icon><Setting /></el-icon>
