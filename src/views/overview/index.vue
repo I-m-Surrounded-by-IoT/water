@@ -17,7 +17,7 @@
         </div>
         <!-- 按钮 -->
         <div class="botton-wrapped">
-          <el-button type="primary">立即上报</el-button>
+          <el-button type="primary">添加设备</el-button>
         </div>
       </div>
       <!-- 表格内容 -->
@@ -31,8 +31,8 @@
           <!-- 插槽 -->
           <el-table-column label="操作">
             <template #default="{ row }">
-              <el-button type="success">开机</el-button>
-              <el-button type="danger">关机</el-button>
+              <el-button type="success">立即上报</el-button>
+              <el-button type="danger">删除设备</el-button>
             </template>
           </el-table-column>
         </el-table>
