@@ -34,8 +34,8 @@ const routes = [
         component: () => import("../views/user/index.vue"),
       },
       {
-        path: "/aftersales",
-        component: () => import("../views/aftersales/index.vue"),
+        path: "/takeboat",
+        component: () => import("../views/takeboat/index.vue"),
       },
       {
         path: "/set",

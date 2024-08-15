@@ -45,7 +45,7 @@
               <button
                 @click="
                   () => {
-                    router.push(`/aftersales?deviceId=${row.id}`);
+                    router.push(`/takeboat?deviceId=${row.id}`);
                   }
                 "
               >

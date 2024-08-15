@@ -40,7 +40,7 @@
               <el-icon><MostlyCloudy /></el-icon>
               <span>设备状态</span>
             </el-menu-item>
-            <el-menu-item index="/aftersales">
+            <el-menu-item index="/takeboat">
               <el-icon><Service /></el-icon>
               <span>控制小船</span>
             </el-menu-item>
