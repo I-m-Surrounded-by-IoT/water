@@ -70,7 +70,7 @@
               >
                 查看详情
               </button>
-              <el-tag type="primary">Tag 1</el-tag>
+              <el-tag>状态</el-tag>
             </template>
           </el-table-column>
         </el-table>
@@ -123,6 +123,7 @@ import { useDebounceFn } from "@vueuse/core";
 import { ElMessage } from "element-plus";
 import router from "@/router";
 import Chart from "chart.js/auto";
+
 const route = useRoute();
 const item = ref({
   first: "设备信息",
