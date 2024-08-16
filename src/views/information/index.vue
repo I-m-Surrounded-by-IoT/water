@@ -33,8 +33,11 @@
       <div class="table-content">
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="record.deviceId" label="设备id" />
-          <el-table-column prop="record.createdAt" label="时间戳" />
           <el-table-column prop="level" label="污染等级" />
+          <el-table-column prop="record.data.ph" label="PH" />
+          <el-table-column prop="record.data.oxygen" label="含氧量" />
+          <el-table-column prop="record.data.temperature" label="温度" />
+          <el-table-column prop="record.createdAt" label="时间戳" />
           <el-table-column label="坐标">
             <template #default="{ row }">
               {{ row.record.data.geoPoint.lat }},{{
@@ -42,8 +45,6 @@
               }}
             </template>
           </el-table-column>
-          <el-table-column prop="record.data.ph" label="PH" />
-          <el-table-column prop="record.data.oxygen" label="含氧量" />
           <el-table-column prop="record.data.tds" label="tds" />
           <el-table-column prop="record.data.tsw" label="tsw" />
           <el-table-column label="操作">
@@ -92,6 +93,7 @@
               <div class="canvas-wrapper">
                 <canvas id="tds" width="100" height="100"></canvas>
                 <canvas id="tsw" width="100" height="100"></canvas>
+                <canvas id="oxygen" width="100" height="100"></canvas>
               </div></div
           ></el-main>
           <el-aside width="350px"
@@ -287,6 +289,9 @@ onMounted(() => {
   const tdsChart = document.getElementById("tds");
   tdsChartInstance = newChart(tdsChart, "tds与tsw");
 
+  /* const temperatureChart = document.getElementById("temperature");
+  tdsChartInstance = newChart(tdsChart, "温度");
+ */
   getValue();
 });
 
