@@ -143,14 +143,6 @@ onMounted(() => {
       backgroundColor: "rgba(204, 255, 0, 0.2)",
     },
   ]);
-  newChart(document.getElementById("Tsw"), "Tsw", labels, [
-    {
-      label: "Tsw",
-      data: guess.qualities.map((q) => q.tsw) /* 黄色 */,
-      borderColor: "rgb(204, 255, 0)",
-      backgroundColor: "rgba(204, 255, 0, 0.2)",
-    },
-  ]);
 });
 
 const item = ref({

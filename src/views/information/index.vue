@@ -86,14 +86,14 @@
               <div class="canvas-wrapper">
                 <canvas id="chart" width="100" height="100"></canvas
                 ><canvas id="pH" width="100" height="100"></canvas>
-                <canvas id="oxygen" width="100" height="100"></canvas>
+                <canvas id="temperature" width="100" height="100"></canvas>
               </div>
             </div>
             <div class="container">
               <div class="canvas-wrapper">
+                <canvas id="oxygen" width="100" height="100"></canvas>
                 <canvas id="tds" width="100" height="100"></canvas>
                 <canvas id="tsw" width="100" height="100"></canvas>
-                <canvas id="oxygen" width="100" height="100"></canvas>
               </div></div
           ></el-main>
           <el-aside width="350px"
@@ -139,6 +139,7 @@ let phChartInstance = undefined;
 let oxygenChartInstance = undefined;
 let tdsChartInstance = undefined;
 let tswChartInstance = undefined;
+let temperatureChartInstance = undefined;
 const getValue = useDebounceFn(() => {
   deteList(deviceId.value, currentPage.value).then(({ data }) => {
     tableData.value = data.data.records;
@@ -159,6 +160,12 @@ const getValue = useDebounceFn(() => {
         data: tableData.value.map((q) => q.record.data.ph),
         borderColor: "rgb(255, 192, 203)",
         backgroundColor: "rgba(255, 192, 203, 0.2)",
+      },
+      {
+        label: "Temperature",
+        data: tableData.value.map((q) => q.record.data.temperature),
+        borderColor: "rgb(178, 34, 34)",
+        backgroundColor: "rgba(178, 34, 34, 0.2)",
       },
     ];
     chartInstance.update("none");
@@ -192,6 +199,12 @@ const getValue = useDebounceFn(() => {
         borderColor: "rgb(135, 206, 250)",
         backgroundColor: "rgba(135, 206, 250)",
       },
+      {
+        label: "Temperature",
+        data: tableData.value.map((q) => q.record.data.temperature),
+        borderColor: "rgb(178, 34, 34)",
+        backgroundColor: "rgba(178, 34, 34, 0.2)",
+      },
     ];
     oxygenChartInstance.update();
 
@@ -204,6 +217,12 @@ const getValue = useDebounceFn(() => {
         data: tableData.value.map((q) => q.record.data.tds),
         borderColor: "rgb(255, 165, 0)",
         backgroundColor: "rgba(255, 165, 0, 0.2)",
+      },
+      {
+        label: "oxygen",
+        data: tableData.value.map((q) => q.record.data.oxygen),
+        borderColor: "rgb(135, 206, 250)",
+        backgroundColor: "rgba(135, 206, 250)",
       },
     ];
     tdsChartInstance.update();
@@ -226,6 +245,25 @@ const getValue = useDebounceFn(() => {
       },
     ];
     tswChartInstance.update();
+
+    temperatureChartInstance.data.labels = tableData.value.map((q) =>
+      new Date(q.record.createdAt).toLocaleString()
+    );
+    temperatureChartInstance.data.datasets = [
+      {
+        label: "temperature",
+        data: tableData.value.map((q) => q.record.data.temperature),
+        borderColor: "rgb(178, 34, 34)",
+        backgroundColor: "rgba(178, 34, 34, 0.2)",
+      },
+      {
+        label: "pH",
+        data: tableData.value.map((q) => q.record.data.ph),
+        borderColor: "rgb(255, 192, 203)",
+        backgroundColor: "rgba(255, 192, 203, 0.2)",
+      },
+    ];
+    temperatureChartInstance.update();
   });
 }, 1000);
 const stop = watch(deviceId, getValue);
@@ -281,7 +319,7 @@ onMounted(() => {
   phChartInstance = newChart(pHChart, "pH与含氧量");
 
   const oxygenChart = document.getElementById("oxygen");
-  oxygenChartInstance = newChart(oxygenChart, "oxygen");
+  oxygenChartInstance = newChart(oxygenChart, "含氧量");
 
   const tswChart = document.getElementById("tsw");
   tswChartInstance = newChart(tswChart, "tsw");
@@ -289,9 +327,9 @@ onMounted(() => {
   const tdsChart = document.getElementById("tds");
   tdsChartInstance = newChart(tdsChart, "tds与tsw");
 
-  /* const temperatureChart = document.getElementById("temperature");
-  tdsChartInstance = newChart(tdsChart, "温度");
- */
+  const temperatureChart = document.getElementById("temperature");
+  temperatureChartInstance = newChart(temperatureChart, "温度");
+
   getValue();
 });
 
