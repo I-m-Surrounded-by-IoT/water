@@ -34,7 +34,7 @@
             </el-menu-item>
             <el-menu-item index="/information">
               <el-icon><Collection /></el-icon>
-              <span>工作日志</span>
+              <span>信息管理</span>
             </el-menu-item>
             <el-menu-item index="/map">
               <el-icon><MostlyCloudy /></el-icon>

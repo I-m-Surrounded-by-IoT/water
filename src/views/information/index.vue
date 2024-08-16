@@ -28,21 +28,7 @@
           >
         </div>
       </div>
-      <div style="width: 600px; height: auto; max-height: 350px">
-        <canvas id="chart"></canvas>
-      </div>
-      <div style="width: 600px; height: auto; max-height: 350px">
-        <canvas style="width: 100px; height: 100px" id="pH"></canvas>
-      </div>
-      <div style="width: 600px; height: auto; max-height: 350px">
-        <canvas style="width: 100px; height: 100px" id="oxygen"></canvas>
-      </div>
-      <div style="width: 600px; height: auto; max-height: 350px">
-        <canvas style="width: 100px; height: 100px" id="tds"></canvas>
-      </div>
-      <div style="width: 600px; height: auto; max-height: 350px">
-        <canvas style="width: 100px; height: 100px" id="tsw"></canvas>
-      </div>
+
       <!-- 表格内容 -->
       <div class="table-content">
         <el-table :data="tableData" border style="width: 100%">
@@ -84,11 +70,38 @@
               >
                 查看详情
               </button>
+              <el-tag type="primary">Tag 1</el-tag>
             </template>
           </el-table-column>
         </el-table>
       </div>
     </div>
+    <div class="common-layout">
+      <el-container>
+        <el-header>数据总缆</el-header>
+        <el-container>
+          <el-main>
+            <div class="container">
+              <div class="canvas-wrapper">
+                <canvas id="chart" width="100" height="100"></canvas
+                ><canvas id="pH" width="100" height="100"></canvas>
+                <canvas id="oxygen" width="100" height="100"></canvas>
+              </div>
+            </div>
+            <div class="container">
+              <div class="canvas-wrapper">
+                <canvas id="tds" width="100" height="100"></canvas>
+                <canvas id="tsw" width="100" height="100"></canvas>
+              </div></div
+          ></el-main>
+          <el-aside width="350px"
+            ><div>警告列表</div>
+            <div>003</div></el-aside
+          >
+        </el-container>
+      </el-container>
+    </div>
+
     <!-- 底部 -->
     <div class="table-footer">
       <el-pagination
@@ -101,7 +114,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import breadcrumb from "@/components/breadcrumb.vue";
 import { deteList, reportNow } from "@/api/dete";
@@ -112,7 +125,7 @@ import router from "@/router";
 import Chart from "chart.js/auto";
 const route = useRoute();
 const item = ref({
-  first: "测试",
+  first: "设备信息",
 });
 const deviceId = ref(route.query.deviceId || "2");
 const tableData = ref([]);
@@ -127,7 +140,6 @@ const getValue = useDebounceFn(() => {
   deteList(deviceId.value, currentPage.value).then(({ data }) => {
     tableData.value = data.data.records;
     total.value = data.data.total;
-    // console.log(tableData.value);
     if (!tableData.value) return;
     chartInstance.data.labels = tableData.value.map((q) =>
       new Date(q.record.createdAt).toLocaleString()
@@ -158,6 +170,12 @@ const getValue = useDebounceFn(() => {
         borderColor: "rgb(255, 192, 203)",
         backgroundColor: "rgba(255, 192, 203, 0.2)",
       },
+      {
+        label: "oxygen",
+        data: tableData.value.map((q) => q.record.data.oxygen),
+        borderColor: "rgb(135, 206, 250)",
+        backgroundColor: "rgba(135, 206, 250)",
+      },
     ];
     phChartInstance.update();
 
@@ -168,8 +186,8 @@ const getValue = useDebounceFn(() => {
       {
         label: "oxygen",
         data: tableData.value.map((q) => q.record.data.oxygen),
-        borderColor: "rgb(255, 192, 203)",
-        backgroundColor: "rgba(255, 192, 203, 0.2)",
+        borderColor: "rgb(135, 206, 250)",
+        backgroundColor: "rgba(135, 206, 250)",
       },
     ];
     oxygenChartInstance.update();
@@ -181,8 +199,8 @@ const getValue = useDebounceFn(() => {
       {
         label: "tds",
         data: tableData.value.map((q) => q.record.data.tds),
-        borderColor: "rgb(255, 192, 203)",
-        backgroundColor: "rgba(255, 192, 203, 0.2)",
+        borderColor: "rgb(255, 165, 0)",
+        backgroundColor: "rgba(255, 165, 0, 0.2)",
       },
     ];
     tdsChartInstance.update();
@@ -194,8 +212,14 @@ const getValue = useDebounceFn(() => {
       {
         label: "tsw",
         data: tableData.value.map((q) => q.record.data.tsw),
-        borderColor: "rgb(255, 192, 203)",
-        backgroundColor: "rgba(255, 192, 203, 0.2)",
+        borderColor: "rgb(204, 255, 0)",
+        backgroundColor: "rgba(204, 255, 0, 0.2)",
+      },
+      {
+        label: "tds",
+        data: tableData.value.map((q) => q.record.data.tds),
+        borderColor: "rgb(255, 165, 0)",
+        backgroundColor: "rgba(255, 165, 0, 0.2)",
       },
     ];
     tswChartInstance.update();
@@ -232,14 +256,14 @@ const newChart = (html, title = "Chart") => {
           display: true,
           title: {
             display: true,
-            text: "Time",
+            text: "生成时间",
           },
         },
         y: {
           display: true,
           title: {
             display: true,
-            text: "Value",
+            text: "information",
           },
         },
       },
@@ -248,10 +272,10 @@ const newChart = (html, title = "Chart") => {
 };
 onMounted(() => {
   const chart = document.getElementById("chart");
-  chartInstance = newChart(chart, "Default");
+  chartInstance = newChart(chart, "PH与污染程度");
 
   const pHChart = document.getElementById("pH");
-  phChartInstance = newChart(pHChart, "pH");
+  phChartInstance = newChart(pHChart, "pH与含氧量");
 
   const oxygenChart = document.getElementById("oxygen");
   oxygenChartInstance = newChart(oxygenChart, "oxygen");
@@ -260,7 +284,7 @@ onMounted(() => {
   tswChartInstance = newChart(tswChart, "tsw");
 
   const tdsChart = document.getElementById("tds");
-  tdsChartInstance = newChart(tdsChart, "tds");
+  tdsChartInstance = newChart(tdsChart, "tds与tsw");
 
   getValue();
 });
@@ -304,5 +328,34 @@ const onReportNow = (id) => {
     display: flex;
     justify-content: flex-end;
   }
+}
+.container {
+  display: flex;
+}
+
+.canvas-wrapper {
+  width: 600px;
+  height: auto;
+  max-height: 350px;
+  display: flex;
+  justify-content: space-between;
+}
+.el-header {
+  background-color: #a9ece5;
+  color: #333;
+  text-align: center;
+  --el-main-padding: 0;
+}
+
+.el-aside {
+  background-color: #3dcf36;
+  color: #0d0d0d;
+  text-align: center;
+}
+.el-main {
+  background-color: #b4d197;
+  color: #0c2cbc;
+  text-align: center;
+  --el-main-padding: 0;
 }
 </style>
