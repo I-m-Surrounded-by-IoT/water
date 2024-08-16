@@ -133,7 +133,7 @@ const openForget = () => {
 }
 .el-main {
   background-image: url("@/assets/images/001.jpg");
-  height: 600px;
+  height: 680px;
   --el-main-padding: 0;
 
   .login-wrapped {
