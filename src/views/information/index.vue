@@ -96,10 +96,7 @@
                 <canvas id="tsw" width="100" height="100"></canvas>
               </div></div
           ></el-main>
-          <el-aside width="350px"
-            ><div>警告列表</div>
-            <div>003</div></el-aside
-          >
+          <el-aside width="350px"><div>AI智能化分析</div></el-aside>
         </el-container>
       </el-container>
     </div>
@@ -392,7 +389,7 @@ const onReportNow = (id) => {
 }
 
 .el-aside {
-  background-color: #3dcf36;
+  background-color: #c8e2eb;
   color: #0d0d0d;
   text-align: center;
 }

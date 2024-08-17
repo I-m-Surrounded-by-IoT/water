@@ -132,7 +132,7 @@ const openForget = () => {
   }
 }
 .el-main {
-  background-image: url("@/assets/images/001.jpg");
+  background-image: url("@/assets/images/008.jpg");
   height: 680px;
   --el-main-padding: 0;
 
