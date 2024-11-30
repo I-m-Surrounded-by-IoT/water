@@ -71,7 +71,7 @@
               >
                 查看详情
               </button>
-              <el-tag>状态</el-tag>
+              <el-tag>正常</el-tag>
             </template>
           </el-table-column>
         </el-table>
