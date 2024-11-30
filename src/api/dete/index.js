@@ -54,3 +54,17 @@ export function takeBoatLeft(deviceId) {
 export function takeBoatRight(deviceId) {
   return takeBoat(deviceId, 2);
 }
+
+//控制小船
+export function getDetail(deviceId) {
+  return request({
+    method: "get",
+    url: "/api/device/detail",
+    params: {
+      id: deviceId,
+    },
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+}
